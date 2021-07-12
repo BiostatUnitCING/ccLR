@@ -13,10 +13,10 @@ kuchenbaecker=args$kuchenbaecker                                                
 antoniou=args$antoniou                                                                  # location and name of input file of published data from Antoniou et al. 2003 (These are supplied in the GitHub repository)
 phenotype=args$phenotype                                                              # location and name of phenotype file with 4 columns (sample_ids, status, age at interview and age at diagnosis)
 output=args$output                                                                  # location and name of file to save the output to; will be saved as 'output.csv'
-rates=args$rates                                                                # disease rates to be used (select between Dorling, Kuchenbaecker and Antoniou)
+rates=args$rates                                                                  # disease rates to be used (select between Dorling, Kuchenbaecker and Antoniou)
 genotypes=args$genotypes                                                        # directory of input genotype files in csv format (2 columns needed: sample_ids and genotype) 
 gene=args$gene                                                                # gene of interest (BRCA1 or BRCA2) 
-customrates=args$customrates                                                                # gene of interest (BRCA1 or BRCA2) 
+customrates=args$customrates                                                # gene of interest (BRCA1 or BRCA2) 
 
 if(is.null(phenotype)){
   print("ERROR phenotype file must be provided. Execution halted")
