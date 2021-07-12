@@ -73,16 +73,12 @@ for (i in 2:colnum){
   if(ncar1<MAF & ncar1!=0 & (ncar1 > ncar2)){
     
     tca1 <- cases[,c("sample_ids",list[[1]][i])]
-    #tca <- table(cases$sample,cases[,list[[1]][i]])
-    #tca1 <- as.data.frame.matrix(tca)
     hetca <- tca1[which(tca1[,2]>0),]
     hetca1 <- hetca[which(hetca[,2]==1),]
     hetca2 <- hetca[which(hetca[,2]==2),]
     freq_ca <- nrow(hetca1)/ncas
     
     tco1 <- controls[,c("sample_ids",list[[1]][i])]
-    #tco <- table(controls$sample,controls[,list[[1]][i]])
-    #tco1 <- as.data.frame.matrix(tco)
     hetco <- tco1[which(tco1[,2]>0),]
     hetco1 <- hetco[which(hetco[,2]==1),]
     hetco2 <- hetco[which(hetco[,2]==2),]
