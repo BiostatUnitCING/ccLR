@@ -103,7 +103,7 @@ Rscript ccLR.R --gene BRCA2 --phenotype /ccLR/example_data/phenotypes.txt --geno
 ```
 |Parameter      |Input       |
 |:---    |:---   |
-|`--gene`       |`BRCA1`, `BRCA2` or `Custom` |
+|`--gene`       |`BRCA1`, `BRCA2`, `CHEK2` or `Custom` |
 |`--phenotype`  |phenotype file (.txt) with sample_ids, status, age at interview and age at disease diagnosis |
 |`--genotypes`  |directory including genotype files (.csv), containing sample_ids and genotype |
 |`--rates`      |`Dorling`, `Kuchenbaecker`, `Antoniou`,  `Custom` |
