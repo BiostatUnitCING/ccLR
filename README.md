@@ -1,7 +1,7 @@
 # Case-control likelihood ratio (LR) #
 **ccLR** (Case-Control Likelihood Ratio)
 
-This repository contains freely accessible scripts for the calculation of case-control likelihood ratios (LRs). This method compares the likelihood of the distribution of the variant of interest between cases and controls, under the hypothesis that the variant has similar age-specific relative risks (RRs) as the “average” *BRCA1/2* or *CHEK2* truncating variant, compared to the hypothesis that it is not associated with increased breast cancer (BC) risk. This method can be also applied for the calculation of case-control LRs in variants residing in other genes, other than *BRCA1*, *BRCA2* and *CHEK2*.
+This repository contains freely accessible scripts for the calculation of case-control likelihood ratios (LRs). This method compares the likelihood of the distribution of the variant of interest between cases and controls, under the hypothesis that the variant has similar age-specific relative risks (RRs) as the “average” *BRCA1/2* truncating variant, compared to the hypothesis that it is not associated with increased breast cancer (BC) risk. This method can be also applied for the calculation of case-control LRs in variants residing in other genes, other than *BRCA1* and *BRCA2*.
 
 ## Installation ##
 All of the components behind this analysis are freely available.
@@ -29,7 +29,7 @@ The following programms and packages are required:
 
     According to the gene of interest, the user must specify the parameter `--gene` as:
     
-   `--gene BRCA1` or `--gene BRCA2` or `--gene CHEK2` or `--gene Custom`
+   `--gene BRCA1` or `--gene BRCA2` or `--gene Custom`
    
 ______________________________________________________________________________________________________________________________________________________________________________
    
@@ -103,7 +103,7 @@ Rscript ccLR.R --gene BRCA2 --phenotype /ccLR/example_data/phenotypes.txt --geno
 ```
 |Parameter      |Input       |
 |:---    |:---   |
-|`--gene`       |`BRCA1`, `BRCA2`, `CHEK2` or `Custom` |
+|`--gene`       |`BRCA1`, `BRCA2` or `Custom` |
 |`--phenotype`  |phenotype file (.txt) with sample_ids, status, age at interview and age at disease diagnosis |
 |`--genotypes`  |directory including genotype files (.csv), containing sample_ids and genotype |
 |`--rates`      |`Dorling`, `Kuchenbaecker`, `Antoniou`,  `Custom` |
