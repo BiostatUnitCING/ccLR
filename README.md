@@ -38,6 +38,7 @@ ________________________________________________________________________________
    2. `status` - Disease status (1 for cases, 0 for controls)
    3. `ageInt` - Age at interview
    4. `AgeDiagIndex` - Age at breast cancer diagnosis
+   5. `Country` - Country of origin
 
     *The phenotype file should be like:*
    ```
