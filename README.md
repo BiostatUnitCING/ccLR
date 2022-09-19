@@ -29,7 +29,7 @@ The following programms and packages are required:
 
     According to the gene of interest, the user must specify the parameter `--gene` as:
     
-   `--gene BRCA1` or `--gene BRCA2` or `--gene Custom`
+   `--gene BRCA1` or `--gene BRCA2` or `--gene CHEK2` or `--gene Custom`
    
 ______________________________________________________________________________________________________________________________________________________________________________
    
