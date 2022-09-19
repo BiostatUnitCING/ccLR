@@ -43,7 +43,7 @@ ________________________________________________________________________________
     *The phenotype file should be like:*
    ```
    sample_ids  status    ageInt          AgeDiagIndex          Country
-   64302       1         68              68                 Greece
+   64302       1         68              68                    Greece
    64303       1	      65	      68                   UK
    64304       0	      65	      68                   USA
    64305       0	      65	      68                   Australia
