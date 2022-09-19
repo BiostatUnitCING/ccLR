@@ -38,18 +38,18 @@ ________________________________________________________________________________
    2. `status` - Disease status (1 for cases, 0 for controls)
    3. `ageInt` - Age at interview
    4. `AgeDiagIndex` - Age at breast cancer diagnosis
-   5. `Country` - Country of origin
+   5. `StudyCountry` - Country of origin
 
     *The phenotype file should be like:*
    ```
-   sample_ids  status    ageInt          AgeDiagIndex          Country
-   64302       1         68              68                    Greece
-   64303       1	      65	      68                    UK
-   64304       0	      65	      68                    USA
-   64305       0	      65	      68                    Australia
-   64306       1	      61	      68                    UK
-   64307       1	      62	      68                    USA
-   64308       0	      61	      68                    Belgium
+   sample_ids  status    ageInt          AgeDiagIndex          StudyCountry
+   64302       1         68              68                         Greece
+   64303       1	      65	      68                         UK
+   64304       0	      65	      68                         USA
+   64305       0	      65	      68                         Australia
+   64306       1	      61	      68                         UK
+   64307       1	      62	      68                         USA
+   64308       0	      61	      68                         Belgium
    ```
    **We emphasize that for *BRCA1* or *BRCA2* variants, the script will terminate if there exist samples in the input phenotype file for which age at diagnosis or interview are below 21 or above 80 years (this happens because age-specific breast cancer rates and risks are not available for ages below 21 or above 80 years).**
 
