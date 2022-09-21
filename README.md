@@ -76,7 +76,7 @@ ________________________________________________________________________________
     If you want to perform the case-control likelihood ratio calculations for variants in other genes then you need to create the file following the format shown below and supply it as input in the parameter `--customrates`:
 
   ```
-  Age	Relative_risk_carriers	Cumulative_Incidence_Rates_carriers	Cumulative_Incidence_Rates_non-carriers	 Penetrance_carriers	Penetrance_non-carriers	    Cumulative_Risk_carriers	Cumulative_Risk_non-carriers
+  Age	Relative_risk_carriers		Disease_Incidence	    	
   21 	18	                19	                                0.007069091	                         0.007461818	        0.000392727	            0.007069091	                0.007461818
   22      18	                19	                                0.007069091	                         0.007461818	        0.000392727	            0.007069091	                0.007461818
   23      18	                19	                                0.007069091	                         0.007461818	        0.000392727	            0.007069091	                0.007461818
