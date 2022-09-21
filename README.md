@@ -99,8 +99,7 @@ ________________________________________________________________________________
 **Finally to perform the analysis, use the following script:**
 
 ```
-cd ccLR-main/
-Rscript ccLR.R --gene BRCA2 --phenotype /example_data/phenotypes.txt --genotypes /example_data/genotypes --rates Dorling --dorling /rates/Dorling_etal.2021.csv --output /example_data/example
+Rscript ccLR.R --gene BRCA2 --phenotype ~/ccLR-main/example_data/phenotypes.txt --genotypes ~/ccLR-main/example_data/genotypes --rates Dorling --dorling ~/ccLR-main/rates/Dorling_etal.2021.csv --output ~/ccLR-main/example_data/example
 ```
 |Parameter      |Input       |
 |:---    |:---   |
