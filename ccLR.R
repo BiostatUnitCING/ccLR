@@ -8,27 +8,15 @@ library(R.utils)
 ########## Process inputs ########## 
 args=commandArgs(asValue=TRUE)
 
-#dorling=args$dorling                                                                        # location and name of input file of published data from Dorling et al. 2021 (These are supplied in the GitHub repository)
-#kuchenbaecker=args$kuchenbaecker                                                          # location and name of input file of published data from Kuchenbaecker et al. 2017 (These are supplied in the GitHub repository)
-#antoniou=args$antoniou                                                                  # location and name of input file of published data from Antoniou et al. 2003 (These are supplied in the GitHub repository)
-#phenotype=args$phenotype                                                              # location and name of phenotype file with 5 columns (sample_ids, status, age at interview, age at diagnosis and country of origin)
-#output=args$output                                                                  # location and name of file to save the output to; will be saved as 'output.csv'
-#rates=args$rates                                                                  # disease rates to be used (select between Dorling, Kuchenbaecker and Antoniou)
-#genotypes=args$genotypes                                                        # directory of input genotype files in csv format (2 columns needed: sample_ids and genotype) 
-#gene=args$gene                                                                # gene of interest (BRCA1, BRCA2 or Custom) 
-#customrates=args$customrates                                                #  directory of input files with penetrance and relative risks; required if we submit custom rates
-
-
-dorling="C:/Users/mariaz/Desktop/Desktop_CING/MariaZanti_Biostatistics/Variability/OncoArrayCaseControl/Manuscript/To submit/GitHub_Dougmethod/rates/Dorling_etal.2021.csv"                                                                       # location and name of input file of published data from Dorling et al. 2021 (These are supplied in the GitHub repository)
-kuchenbaecker="C:/Users/mariaz/Desktop/Desktop_CING/MariaZanti_Biostatistics/Variability/OncoArrayCaseControl/Manuscript/To submit/GitHub_Dougmethod/rates/Kuchenbaecker_etal.2017.csv"                                                           # location and name of input file of published data from Kuchenbaecker et al. 2017 (These are supplied in the GitHub repository)
-antoniou="C:/Users/mariaz/Desktop/Desktop_CING/MariaZanti_Biostatistics/Variability/OncoArrayCaseControl/Manuscript/To submit/GitHub_Dougmethod/rates/Antoniou_etal.2003.csv"                                                                   # location and name of input file of published data from Antoniou et al. 2003 (These are supplied in the GitHub repository)
-phenotype="C:/Users/mariaz/Desktop/Desktop_CING/MariaZanti_Biostatistics/Variability/OncoArrayCaseControl/Manuscript/To submit/GitHub_Dougmethod/example_data/phenotypes.txt"                                                               # location and name of phenotype file with 5 columns (sample_ids, status, age at interview, age at diagnosis and country of origin)
-output="C:/Users/mariaz/Desktop/Desktop_CING/MariaZanti_Biostatistics/Variability/OncoArrayCaseControl/Manuscript/To submit/GitHub_Dougmethod/"                                                                   # location and name of file to save the output to; will be saved as 'output.csv'
-rates="Dorling"                                                                  # disease rates to be used (select between Dorling, Kuchenbaecker and Antoniou)
-genotypes="C:/Users/mariaz/Desktop/Desktop_CING/MariaZanti_Biostatistics/Variability/OncoArrayCaseControl/Manuscript/To submit/GitHub_Dougmethod/example_data/genotypes/"                                                         # directory of input genotype files in csv format (2 columns needed: sample_ids and genotype) 
-gene="BRCA1"                                                                # gene of interest (BRCA1, BRCA2 or Custom) 
+dorling=args$dorling                                                                        # location and name of input file of published data from Dorling et al. 2021 (These are supplied in the GitHub repository)
+kuchenbaecker=args$kuchenbaecker                                                          # location and name of input file of published data from Kuchenbaecker et al. 2017 (These are supplied in the GitHub repository)
+antoniou=args$antoniou                                                                  # location and name of input file of published data from Antoniou et al. 2003 (These are supplied in the GitHub repository)
+phenotype=args$phenotype                                                              # location and name of phenotype file with 5 columns (sample_ids, status, age at interview, age at diagnosis and country of origin)
+output=args$output                                                                  # location and name of file to save the output to; will be saved as 'output.csv'
+rates=args$rates                                                                  # disease rates to be used (select between Dorling, Kuchenbaecker and Antoniou)
+genotypes=args$genotypes                                                        # directory of input genotype files in csv format (2 columns needed: sample_ids and genotype) 
+gene=args$gene                                                                # gene of interest (BRCA1, BRCA2 or Custom) 
 customrates=args$customrates                                                #  directory of input files with penetrance and relative risks; required if we submit custom rates
-
 
 if(is.null(phenotype)){
   print("ERROR phenotype file must be provided. Execution halted")
