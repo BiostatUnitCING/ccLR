@@ -8,15 +8,27 @@ library(R.utils)
 ########## Process inputs ########## 
 args=commandArgs(asValue=TRUE)
 
-dorling=args$dorling                                                                        # location and name of input file of published data from Dorling et al. 2021 (These are supplied in the GitHub repository)
-kuchenbaecker=args$kuchenbaecker                                                          # location and name of input file of published data from Kuchenbaecker et al. 2017 (These are supplied in the GitHub repository)
-antoniou=args$antoniou                                                                  # location and name of input file of published data from Antoniou et al. 2003 (These are supplied in the GitHub repository)
-phenotype=args$phenotype                                                              # location and name of phenotype file with 4 columns (sample_ids, status, age at interview and age at diagnosis)
-output=args$output                                                                  # location and name of file to save the output to; will be saved as 'output.csv'
-rates=args$rates                                                                  # disease rates to be used (select between Dorling, Kuchenbaecker and Antoniou)
-genotypes=args$genotypes                                                        # directory of input genotype files in csv format (2 columns needed: sample_ids and genotype) 
-gene=args$gene                                                                # gene of interest (BRCA1 or BRCA2) 
-customrates=args$customrates                                                # gene of interest (BRCA1 or BRCA2) 
+#dorling=args$dorling                                                                        # location and name of input file of published data from Dorling et al. 2021 (These are supplied in the GitHub repository)
+#kuchenbaecker=args$kuchenbaecker                                                          # location and name of input file of published data from Kuchenbaecker et al. 2017 (These are supplied in the GitHub repository)
+#antoniou=args$antoniou                                                                  # location and name of input file of published data from Antoniou et al. 2003 (These are supplied in the GitHub repository)
+#phenotype=args$phenotype                                                              # location and name of phenotype file with 5 columns (sample_ids, status, age at interview, age at diagnosis and country of origin)
+#output=args$output                                                                  # location and name of file to save the output to; will be saved as 'output.csv'
+#rates=args$rates                                                                  # disease rates to be used (select between Dorling, Kuchenbaecker and Antoniou)
+#genotypes=args$genotypes                                                        # directory of input genotype files in csv format (2 columns needed: sample_ids and genotype) 
+#gene=args$gene                                                                # gene of interest (BRCA1, BRCA2 or Custom) 
+#customrates=args$customrates                                                #  directory of input files with penetrance and relative risks; required if we submit custom rates
+
+
+dorling="C:/Users/mariaz/Desktop/Desktop_CING/MariaZanti_Biostatistics/Variability/OncoArrayCaseControl/Manuscript/To submit/GitHub_Dougmethod/rates/Dorling_etal.2021.csv"                                                                       # location and name of input file of published data from Dorling et al. 2021 (These are supplied in the GitHub repository)
+kuchenbaecker="C:/Users/mariaz/Desktop/Desktop_CING/MariaZanti_Biostatistics/Variability/OncoArrayCaseControl/Manuscript/To submit/GitHub_Dougmethod/rates/Kuchenbaecker_etal.2017.csv"                                                           # location and name of input file of published data from Kuchenbaecker et al. 2017 (These are supplied in the GitHub repository)
+antoniou="C:/Users/mariaz/Desktop/Desktop_CING/MariaZanti_Biostatistics/Variability/OncoArrayCaseControl/Manuscript/To submit/GitHub_Dougmethod/rates/Antoniou_etal.2003.csv"                                                                   # location and name of input file of published data from Antoniou et al. 2003 (These are supplied in the GitHub repository)
+phenotype="C:/Users/mariaz/Desktop/Desktop_CING/MariaZanti_Biostatistics/Variability/OncoArrayCaseControl/Manuscript/To submit/GitHub_Dougmethod/example_data/phenotypes.txt"                                                               # location and name of phenotype file with 5 columns (sample_ids, status, age at interview, age at diagnosis and country of origin)
+output="C:/Users/mariaz/Desktop/Desktop_CING/MariaZanti_Biostatistics/Variability/OncoArrayCaseControl/Manuscript/To submit/GitHub_Dougmethod/"                                                                   # location and name of file to save the output to; will be saved as 'output.csv'
+rates="Dorling"                                                                  # disease rates to be used (select between Dorling, Kuchenbaecker and Antoniou)
+genotypes="C:/Users/mariaz/Desktop/Desktop_CING/MariaZanti_Biostatistics/Variability/OncoArrayCaseControl/Manuscript/To submit/GitHub_Dougmethod/example_data/genotypes/"                                                         # directory of input genotype files in csv format (2 columns needed: sample_ids and genotype) 
+gene="BRCA1"                                                                # gene of interest (BRCA1, BRCA2 or Custom) 
+customrates=args$customrates                                                #  directory of input files with penetrance and relative risks; required if we submit custom rates
+
 
 if(is.null(phenotype)){
   print("ERROR phenotype file must be provided. Execution halted")
@@ -56,53 +68,74 @@ df$AgeDiagIndex[is.na(df$AgeDiagIndex)] <- 888
 df$ageInt[is.na(df$ageInt)] <- 888
 
 list <- list(colnames(df))
-colnum <- ncol(df) - 3
+colnum <- ncol(df) - 4
+country_result <- NULL
+country_result <- data.frame(country_result)
+results <- NULL
+results <- data.frame(results)
 for (i in 2:colnum){
+  paste(i)
+  paste(list[[1]][i])
   snp_file <- paste('variant',list[[1]][i],".csv",sep="")
-  df1 <- df[,c("sample_ids", list[[1]][i], "status", "ageInt", "AgeDiagIndex")]
-  df2 <- df1 %>% drop_na(list[[1]][i])
-  ncon <- nrow(df2[df2$status == "0",])
-  ncas <- nrow(df2[df2$status == "1",])
-  cases <- df2[which(df2$status==1),]
-  controls <- df2[which(df2$status==0),]
-  carriers1 <- df2[which(df2[,2]==1),]
-  ncar1 <- nrow(carriers1)
-  carriers2 <- df2[which(df2[,2]==2),]
-  ncar2 <- nrow(carriers2)
-  
-  if(ncar1<MAF & ncar1!=0 & (ncar1 > ncar2)){
-    
-    tca1 <- cases[,c("sample_ids",list[[1]][i])]
-    hetca <- tca1[which(tca1[,2]>0),]
-    hetca1 <- hetca[which(hetca[,2]==1),]
-    hetca2 <- hetca[which(hetca[,2]==2),]
-    freq_ca <- nrow(hetca1)/ncas
-    
-    tco1 <- controls[,c("sample_ids",list[[1]][i])]
-    hetco <- tco1[which(tco1[,2]>0),]
-    hetco1 <- hetco[which(hetco[,2]==1),]
-    hetco2 <- hetco[which(hetco[,2]==2),]
-    freq_con <- nrow(hetco1)/ncon
-    
-    #####
-    
-    prop_cases <- ncas/(ncas+ncon)
-    
-    m1 <- df2[which(df2[,list[[1]][i]]==1),]
-    m1$age_pen[m1$status=="0"] <- floor(m1$ageInt[m1$status=="0"])
-    m1$age_pen[m1$status=="1"] <- floor(m1$AgeDiagIndex[m1$status=="1"])
-    
-    ##remove missing ages and filter for age
-    m2 <- m1[which(m1$age_pen!=888),]
-    if(any((m2$age_pen<21) | (m2$age_pen>80))){
-      print("ERROR This analysis is only applicable for samples diagnosed or interviewed between the ages of 21-80. Please remove samples not following these criteria. Execution halted")
-      quit()
-    }
-    rownames(m2) = NULL
-    
-    if(gene=="BRCA1"){
+  df1 <- df[,c("sample_ids", list[[1]][i], "status", "ageInt", "AgeDiagIndex","StudyCountry")]
+  df1 <- df1 %>% drop_na(list[[1]][i])
+  df1$age_pen[df1$status=="0"] <- floor(df1$ageInt[df1$status=="0"])
+  df1$age_pen[df1$status=="1"] <- floor(df1$AgeDiagIndex[df1$status=="1"])
+  ##remove missing ages and filter for age
+  df1 <- df1[which(df1$age_pen!=888),]
+  if(any((df1$age_pen<21) | (df1$age_pen>80))){
+    print("ERROR This analysis is only applicable for samples diagnosed or interviewed between the ages of 21-80. Please remove samples not following these criteria. Execution halted")
+    quit()
+  }
+  non_carriers <- df1[which(df1[,list[[1]][i]]==0),]
+  hets <- df1[which(df1[,list[[1]][i]]==1),]
+  hets_cas <- hets[which(hets$status ==1),]
+  if(nrow(hets_cas)!=0){
+  meanagehets_cas <- round(mean(hets_cas$age_pen),digits=2)
+  sdagehets_cas <- round(sd(hets_cas$age_pen),digits=2)
+  minagehets_cas <- min(hets_cas$age_pen)
+  maxagehets_cas <- max(hets_cas$age_pen)}else{
+  meanagehets_cas <-NULL
+  sdagehets_cas<-NULL
+  minagehets_cas<-NULL
+  maxagehets_cas<-NULL
+  }
+  hets_con <- hets[which(hets$status ==0),]
+  if(nrow(hets_con)!=0){
+  meanagehets_con <- round(mean(hets_con$age_pen),digits=2)
+  sdagehets_con <- round(sd(hets_con$age_pen),digits=2)
+  minagehets_con <- min(hets_con$age_pen)
+  maxagehets_con <- max(hets_con$age_pen)}else{
+  meanagehets_con <-NULL
+  sdagehets_con<-NULL
+  minagehets_con<-NULL
+  maxagehets_con<-NULL
+  }
+  homo <- df1[which(df1[,list[[1]][i]]==2),]
+  cas <- df1[which(df1$status == 1),]
+  con <- df1[which(df1$status == 0),]
+  freq_cases <- nrow(hets_cas)/nrow(cas)
+  freq_controls <- nrow(hets_con)/nrow(con)
+
+  if(nrow(hets)<MAF & nrow(hets)!=0 & (nrow(hets) > nrow(homo))){
+    df1$StudyCountry <- as.factor(df1$StudyCountry)
+    country <- levels(df1$StudyCountry)
+    for (h in 1:length(country)) { # Germany - 8 code
+      df2 <- df1[which(df1$StudyCountry == country[h]),]
+      N=nrow(df2)
+      ncon <- nrow(df2[df2$status == "0",])
+      ncas <- nrow(df2[df2$status == "1",]) #number of cases and controls when NA were removed
+      cases <- df2[which(df2$status==1),]
+      controls <- df2[which(df2$status==0),]
+      car1 <- df2[which(df2[,list[[1]][i]]==1),]
+      ncar1 <- nrow(car1)
+      car2 <-  df2[which(df2[,list[[1]][i]]==2),]
+      ncar2 <- nrow(car2)
+      m2 <- df2
+      rownames(m2) = NULL
+      if(gene=="BRCA1"){
       
-    if(rates=="Dorling"){
+      if(rates=="Dorling"){
       
       #---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
       #Breast Cancer Odds ratios taken from Dorling L et al.  N. Engl. J. Med. 2021;384:428-439.
@@ -117,11 +150,9 @@ for (i in 2:colnum){
     
       for (j in 1:nrow(m2)){
       
-        m2$D[j] <- Dorling[Dorling$Age==m2$age_pen[j],"BC_Cumulative_Risk_BRCA1.carriers"]
-        m2$I[j] <- Dorling[Dorling$Age==m2$age_pen[j],"BC_Cumulative_Risk_non.carriers"]
-        m2$J[j] <- Dorling[Dorling$Age==m2$age_pen[j],"BC_Penetrance_BRCA1.carriers"]
-        m2$K[j] <- Dorling[Dorling$Age==m2$age_pen[j],"BC_Penetrance_non.carriers"]
-      
+        m2$RR[j] <- Dorling[Dorling$Age==m2$age_pen[j],"BC_Relative_risk_BRCA1.carriers"]
+        m2$Incidence[j] <- Dorling[Dorling$Age==m2$age_pen[j],"BC_Incidence"]
+
       }
     } else if (rates=="Kuchenbaecker"){
       
@@ -138,11 +169,9 @@ for (i in 2:colnum){
       
       for (j in 1:nrow(m2)){
         
-        m2$D[j] <- Kuchenbaecker[Kuchenbaecker$Age==m2$age_pen[j],"BC_Cumulative_Risk_BRCA1.carriers"]
-        m2$I[j] <- Kuchenbaecker[Kuchenbaecker$Age==m2$age_pen[j],"BC_Cumulative_Risk_non.carriers"]
-        m2$J[j] <- Kuchenbaecker[Kuchenbaecker$Age==m2$age_pen[j],"BC_Penetrance_BRCA1.carriers"]
-        m2$K[j] <- Kuchenbaecker[Kuchenbaecker$Age==m2$age_pen[j],"BC_Penetrance_non.carriers"]
-        
+        m2$RR[j] <- Kuchenbaecker[Kuchenbaecker$Age==m2$age_pen[j],"BC_Relative_risk_BRCA1.carriers"]
+        m2$Incidence[j] <- Kuchenbaecker[Kuchenbaecker$Age==m2$age_pen[j],"BC_Incidence"]
+
       }
       
     } else if(rates=="Antoniou"){
@@ -160,11 +189,9 @@ for (i in 2:colnum){
       
       for (j in 1:nrow(m2)){
         
-        m2$D[j] <- Antoniou[Antoniou$Age==m2$age_pen[j],"BC_Cumulative_Risk_BRCA1.carriers"]
-        m2$I[j] <- Antoniou[Antoniou$Age==m2$age_pen[j],"BC_Cumulative_Risk_non.carriers"]
-        m2$J[j] <- Antoniou[Antoniou$Age==m2$age_pen[j],"BC_Penetrance_BRCA1.carriers"]
-        m2$K[j] <- Antoniou[Antoniou$Age==m2$age_pen[j],"BC_Penetrance_non.carriers"]
-        
+        m2$RR[j] <- Antoniou[Antoniou$Age==m2$age_pen[j],"BC_Relative_risk_BRCA1.carriers"]
+        m2$Incidence[j] <- Antoniou[Antoniou$Age==m2$age_pen[j],"BC_Incidence"]
+
       }
     } else if (is.null(rates)){
       print("ERROR disease rates required for LR calculation must be provided. Execution halted")
@@ -186,11 +213,9 @@ for (i in 2:colnum){
         
         for (j in 1:nrow(m2)){
           
-          m2$D[j] <- Dorling[Dorling$Age==m2$age_pen[j],"BC_Cumulative_Risk_BRCA1.carriers"]
-          m2$I[j] <- Dorling[Dorling$Age==m2$age_pen[j],"BC_Cumulative_Risk_non.carriers"]
-          m2$J[j] <- Dorling[Dorling$Age==m2$age_pen[j],"BC_Penetrance_BRCA1.carriers"]
-          m2$K[j] <- Dorling[Dorling$Age==m2$age_pen[j],"BC_Penetrance_non.carriers"]
-          
+          m2$RR[j] <- Dorling[Dorling$Age==m2$age_pen[j],"BC_Relative_risk_BRCA2.carriers"]
+          m2$Incidence[j] <- Dorling[Dorling$Age==m2$age_pen[j],"BC_Incidence"]
+
         }
       } else if (rates=="Kuchenbaecker"){
         
@@ -207,11 +232,9 @@ for (i in 2:colnum){
         
         for (j in 1:nrow(m2)){
           
-          m2$D[j] <- Kuchenbaecker[Kuchenbaecker$Age==m2$age_pen[j],"BC_Cumulative_Risk_BRCA1.carriers"]
-          m2$I[j] <- Kuchenbaecker[Kuchenbaecker$Age==m2$age_pen[j],"BC_Cumulative_Risk_non.carriers"]
-          m2$J[j] <- Kuchenbaecker[Kuchenbaecker$Age==m2$age_pen[j],"BC_Penetrance_BRCA1.carriers"]
-          m2$K[j] <- Kuchenbaecker[Kuchenbaecker$Age==m2$age_pen[j],"BC_Penetrance_non.carriers"]
-          
+          m2$RR[j] <- Kuchenbaecker[Kuchenbaecker$Age==m2$age_pen[j],"BC_Relative_risk_BRCA2.carriers"]
+          m2$Incidence[j] <- Kuchenbaecker[Kuchenbaecker$Age==m2$age_pen[j],"BC_Incidence"]
+
         }
         
       } else if(rates=="Antoniou"){
@@ -229,11 +252,9 @@ for (i in 2:colnum){
         
         for (j in 1:nrow(m2)){
           
-          m2$D[j] <- Antoniou[Antoniou$Age==m2$age_pen[j],"BC_Cumulative_Risk_BRCA1.carriers"]
-          m2$I[j] <- Antoniou[Antoniou$Age==m2$age_pen[j],"BC_Cumulative_Risk_non.carriers"]
-          m2$J[j] <- Antoniou[Antoniou$Age==m2$age_pen[j],"BC_Penetrance_BRCA1.carriers"]
-          m2$K[j] <- Antoniou[Antoniou$Age==m2$age_pen[j],"BC_Penetrance_non.carriers"]
-          
+          m2$RR[j] <- Antoniou[Antoniou$Age==m2$age_pen[j],"BC_Relative_risk_BRCA2.carriers"]
+          m2$Incidence[j] <- Antoniou[Antoniou$Age==m2$age_pen[j],"BC_Incidence"]
+
         }
       }
       }else if (gene=="Custom"){
@@ -245,10 +266,8 @@ for (i in 2:colnum){
           Customrates <- read.csv(paste(customrates), header = TRUE)
           for (j in 1:nrow(m2)){
             
-            m2$D[j] <- Customrates[Customrates$Age==m2$age_pen[j],"Cumulative_Risk_carriers"]
-            m2$I[j] <- Customrates[Customrates$Age==m2$age_pen[j],"Cumulative_Risk_non-carriers"]
-            m2$J[j] <- Customrates[Customrates$Age==m2$age_pen[j],"Penetrance_carriers"]
-            m2$K[j] <- Customrates[Customrates$Age==m2$age_pen[j],"Penetrance_non-carriers"]
+            m2$RR[j] <- Customrates[Customrates$Age==m2$age_pen[j],"BC_RelativeRisk"]
+            m2$Incidence[j] <- Customrates[Customrates$Age==m2$age_pen[j],"BC_Incidence"]
           }
         }else if (is.null(rates)){
           print("ERROR rates for LR calculation must be provided. Execution halted")
@@ -259,38 +278,39 @@ for (i in 2:colnum){
       quit()
       }  
     
-    if(freq_con==0){
-        freq_con <- (0 + 1) / (ncon + 2)
-      }
-    
-      m2$E <- freq_con * (1-m2$D) / (freq_con * (1-m2$D) + (1-freq_con)*(1-m2$I))
-      m2$F <- freq_con * m2$J / (freq_con * m2$J + (1 - freq_con) * m2$K)
-      m2$G <- m2$F / m2$E
-      m2$H <- prop_cases * m2$G / (prop_cases * m2$G + 1 - prop_cases)
-      m2$L <- ifelse(m2$status==1,m2$H,1-m2$H)
-      m2$M <- log10(m2$L)
-  
-      F16 <- (prop_cases^nrow(hetca1))*((1-prop_cases)^nrow(hetco1))
-      H14 <- sum(m2$M)
-      H16 <- log10(F16)
-      H18 <- H14-H16
-      I18 <- 10^(H18)
-      J18 <- 10^(-H18)
-    
+      #Remove homozygotes
+      m2 <- m2[which(m2[,2]!=2),]
+      m2$S0 <- exp((-(m2$Incidence))*m2$age_pen)
+      m2$S1 <- exp((-(m2$Incidence))*m2$age_pen*m2$RR)
+      K=ncar1 #total number of variant carriers (N defined earlier-stratum specific)
+      m2$Likelihood <- ifelse(m2$status==0, ((m2$S1)/(m2$S0))*(m2$RR^0),((m2$S1)/(m2$S0))*(m2$RR^1))
+      m3 <- m2[which(m2[,2] == 1),]
+      LR <- ifelse(K>0, (N^K*prod(m3$Likelihood))/((sum(m2$Likelihood))^K), 1)
+      country_result <- rbind(country_result)
+      country_result[country[h],"K"] <- K
+      country_result[country[h],"N"] <- N
+      country_result[country[h],"Prod"] <- prod(m3$Likelihood)
+      country_result[country[h],"Sum"] <- sum(m2$Likelihood)
+      country_result[country[h],"LR_stratum"] <- LR 
+    }
+      
       SNP <- paste(list[[1]][i])
     
-      results[SNP,"Total_n_cases"] <- ncas
-      results[SNP,"Total_n_controls"] <- ncon
-      results[SNP,"n_carriers_cases"] <- nrow(hetca1)
-      results[SNP,"n_carriers_controls"] <- nrow(hetco1)
-      results[SNP,"freq_cases"] <- freq_ca
-      results[SNP,"freq_controls"] <- freq_con
-      results[SNP,"oddsfavour"] <- I18
-      results[SNP,"oddsagainst"] <- J18
-      print(paste("Case-control likelihood ratio calculated with success for variant",list[[1]][i], sep=" "))
-      }
+      results[SNP,"Total_n_cases"] <- nrow(cas)  
+      results[SNP,"Total_n_controls"] <- nrow(con) 
+      results[SNP,"n_carriers_cases"] <- nrow(hets_cas)
+      results[SNP,"n_carriers_controls"] <- nrow(hets_con)
+      results[SNP,"freq_cases"] <- freq_cases
+      results[SNP,"freq_controls"] <- freq_controls
+      if(nrow(hets_cas)>1){
+        results[SNP,"Case_Carriers_Age"] <- paste(meanagehets_cas,"±",sdagehets_cas," (",minagehets_cas,"-",maxagehets_cas,")",sep="")}else{results[SNP,"Case_Carriers_Age"] <- meanagehets_cas}
+      if(nrow(hets_con)>1){
+        results[SNP,"Control_Carriers_Age"] <- paste(meanagehets_con,"±",sdagehets_con," (",minagehets_con,"-",maxagehets_con,")",sep="")}else{results[SNP,"Control_Carriers_Age"]<-NA}
+      country_result$LR_stratum[is.na(country_result$LR_stratum)] <- 1
+      results[SNP,"LR"] <- prod(country_result$LR_stratum)
+  }
   else{
-  i<-i+1}}
+    i<-i+1}}
 
 write.csv(results, paste(output,".csv",sep=""))
 
