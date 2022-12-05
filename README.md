@@ -118,12 +118,10 @@ Rscript ccLR.R --gene BRCA2 --phenotype ~/ccLR-main/example_data/phenotypes.txt 
 Detailed calculations can also be performed by the user, using the pre-formatted excel calculator "ccLRCalculator.xlsx" included in the GitHub repository.
 
 ## General information ##
-This method was developed by the [ENIGMA](https://enigmaconsortium.org/) (Evidence-based Network for the Interpretation of Germline Mutant Alleles) consortium for the calculation of the case-control likelihood ratio (LR) of *BRCA1* and *BRCA2* variants.
-However, scripts can also be applied for other genes too. 
+This method was developed on behalf of the BCAC and [ENIGMA](https://enigmaconsortium.org/) (Evidence-based Network for the Interpretation of Germline Mutant Alleles) consortiums for the calculation of the case-control likelihood ratio (LR) for *BRCA1*, *BRCA2* and other disease-genes with well-established penetrance estimates.
 These scripts have been implemented in the context of the following "Under review" manuscript:
 
-Zanti M et al. "Case-control likelihood ratio calculation for clinical classification of variants of uncertain significance in the *BRCA1* and *BRCA2* genes".
-
+Zanti M et al. A likelihood ratio approach for utilizing case-control data in the clinical classification of rare sequence variants: application to *BRCA1* and *BRCA2*
 ## Author ##
 Zanti M.
 
