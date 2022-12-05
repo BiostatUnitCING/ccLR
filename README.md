@@ -1,7 +1,11 @@
 # Case-control likelihood ratio (LR) #
 **ccLR** (Case-Control Likelihood Ratio)
 
-This repository contains freely accessible scripts for the calculation of case-control likelihood ratios (LRs). This method compares the likelihood of the distribution of the variant of interest between cases and controls, under the hypothesis that the variant has similar age-specific relative risks (RRs) as the “average” *BRCA1/2* truncating variant, compared to the hypothesis that it is not associated with increased breast cancer (BC) risk. This method can be also applied for the calculation of case-control LRs in variants residing in other genes, other than *BRCA1* and *BRCA2*.
+This repository contains freely accessible R scripts and a pre-formatted excel calculator for the calculation of case-control likelihood ratios (LRs). 
+
+This method compares the likelihood of the distribution of the variant of interest among cases and controls, under the hypothesis that the variant is associated with similar risks of the disease in question, as the “average” pathogenic variant, compared to the likelihood under the hypothesis that it is a benign variant not associated with increased risk. 
+
+These resources may be readily applied for the calculation of LRs to be used in classification of VUS in the *BRCA1* and *BRCA2*, and other disease susceptibility genes with known penetrance values. 
 
 ## Installation ##
 All of the components behind this analysis are freely available.
