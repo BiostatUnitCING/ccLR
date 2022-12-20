@@ -130,7 +130,12 @@ Zanti M et al. A likelihood ratio approach for utilizing case-control data in th
 Zanti M.
 
 ## Contact ##
-For questions and comments, please open a Github issue (preferred) or contact Maria Zanti at mariaz@cing.ac.cy
+For questions and comments, please open a Github issue (preferred) or contact Maria Zanti at mariaz at cing.ac.cy
+
+## License ##
+The method is distributed under the GPL either version 3 or later license.
+
+
 
 
 
