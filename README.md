@@ -1,7 +1,7 @@
 # Case-control likelihood ratio (LR) #
 **ccLR** (Case-Control Likelihood Ratio)
 
-This repository contains freely accessible R scripts and a pre-formatted excel calculator for the calculation of case-control likelihood ratios (LRs). 
+This repository contains freely accessible R scripts and pre-formatted excel calculators for the calculation of case-control likelihood ratios (LRs). 
 
 This method compares the likelihood of the distribution of the variant of interest among cases and controls, under the hypothesis that the variant is associated with similar risks of the disease in question, as the “average” pathogenic variant, compared to the likelihood under the hypothesis that it is a benign variant not associated with increased risk. 
 
