@@ -133,7 +133,7 @@ These scripts have been implemented in the context of the following manuscripts:
 Zanti M.
 
 ## Contact ##
-For questions and comments, please open a Github issue (preferred) or contact Maria Zanti at mariaz at cing.ac.cy
+For questions and comments, please open a Github issue (preferred) or contact Maria Zanti at mariaz@cing.ac.cy
 
 ## License ##
 The method is distributed under the GPL either version 3 or later license.
