@@ -126,7 +126,7 @@ This method was developed on behalf of the [Breast Cancer Association Consortium
 
 These scripts have been implemented in the context of the following manuscripts:
 
-Zanti M et al. A likelihood ratio approach for utilizing case-control data in the clinical classification of rare sequence variants: application to *BRCA1* and *BRCA2* https://onlinelibrary.wiley.com/doi/10.1155/2023/9961341
+[Zanti M et al. A likelihood ratio approach for utilizing case-control data in the clinical classification of rare sequence variants: application to *BRCA1* and *BRCA2*] https://onlinelibrary.wiley.com/doi/10.1155/2023/9961341
 
 ## Author ##
 Zanti M.
